@@ -6,6 +6,7 @@ import MarkdownEditor from 'browser/components/MarkdownEditor'
 import MarkdownSplitEditor from 'browser/components/MarkdownSplitEditor'
 import TodoListPercentage from 'browser/components/TodoListPercentage'
 import StarButton from './StarButton'
+import NewWindowButton from './NewWindowButton'
 import TagSelect from './TagSelect'
 import FolderSelect from './FolderSelect'
 import dataApi from 'browser/main/lib/dataApi'
@@ -459,6 +460,7 @@ class MarkdownNoteDetail extends React.Component {
       </div>
       <div styleName='info-right'>
         <ToggleModeButton onClick={(e) => this.handleSwitchMode(e)} editorType={editorType} />
+        <NewWindowButton/>
         <StarButton
           onClick={(e) => this.handleStarButtonClick(e)}
           isActive={note.isStarred}

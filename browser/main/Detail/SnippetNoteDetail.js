@@ -5,6 +5,7 @@ import styles from './SnippetNoteDetail.styl'
 import CodeEditor from 'browser/components/CodeEditor'
 import MarkdownEditor from 'browser/components/MarkdownEditor'
 import StarButton from './StarButton'
+import NewWindowButton from './NewWindowButton'
 import TagSelect from './TagSelect'
 import FolderSelect from './FolderSelect'
 import dataApi from 'browser/main/lib/dataApi'
@@ -798,6 +799,8 @@ class SnippetNoteDetail extends React.Component {
         />
       </div>
       <div styleName='info-right'>
+        <NewWindowButton/>
+        
         <StarButton
           onClick={(e) => this.handleStarButtonClick(e)}
           isActive={note.isStarred}
