@@ -32,6 +32,7 @@ import { formatDate } from 'browser/lib/date-formatter'
 import i18n from 'browser/lib/i18n'
 import { confirmDeleteNote } from 'browser/lib/confirmDeleteNote'
 import markdownToc from 'browser/lib/markdown-toc-generator'
+import { ipcRenderer } from 'electron';
 
 const electron = require('electron')
 const { remote } = electron
@@ -343,6 +344,10 @@ class SnippetNoteDetail extends React.Component {
         this.deleteSnippetByIndex(index)
       }
     }
+  }
+
+  handleOpenNoteDetached (e) {
+    ipcRenderer.send('open-detached-note')
   }
 
   deleteSnippetByIndex (index) {
@@ -799,8 +804,10 @@ class SnippetNoteDetail extends React.Component {
         />
       </div>
       <div styleName='info-right'>
-        <NewWindowButton/>
-        
+        <NewWindowButton
+          onClick={(e) => this.handleOpenNoteDetached(e)}
+        />
+
         <StarButton
           onClick={(e) => this.handleStarButtonClick(e)}
           isActive={note.isStarred}
