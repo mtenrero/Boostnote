@@ -1,3 +1,4 @@
+import React from 'react'
 import ReactDOM from 'react-dom'
 import Note from './Note'
 import { Provider } from 'react-redux'
@@ -8,13 +9,11 @@ import store from '../store'
 const el = document.getElementById('content')
 const history = syncHistoryWithStore(hashHistory, store)
 
-
 ReactDOM.render((
-    <Provider store={store}>
-      <Router history={history}>
-        <Route path='/' component={Note}>
-        </Route>
-      </Router>
-    </Provider>
+  <Provider store={store}>
+    <Router history={history}>
+      <Route path='/' component={Note} />
+    </Router>
+  </Provider>
   ), el, function () {
   })
