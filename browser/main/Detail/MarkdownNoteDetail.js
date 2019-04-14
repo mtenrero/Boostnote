@@ -460,7 +460,7 @@ class MarkdownNoteDetail extends React.Component {
       </div>
       <div styleName='info-right'>
         <ToggleModeButton onClick={(e) => this.handleSwitchMode(e)} editorType={editorType} />
-        <NewWindowButton/>
+        <NewWindowButton />
         <StarButton
           onClick={(e) => this.handleStarButtonClick(e)}
           isActive={note.isStarred}
