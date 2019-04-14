@@ -347,7 +347,7 @@ class SnippetNoteDetail extends React.Component {
   }
 
   handleOpenNoteDetached (e) {
-    ipcRenderer.send('open-detached-note')
+    ipcRenderer.send('open-detached-note', this.props.location.query)
   }
 
   deleteSnippetByIndex (index) {
