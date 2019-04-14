@@ -4,7 +4,8 @@ const NodeTargetPlugin = require('webpack/lib/node/NodeTargetPlugin')
 
 var config = {
   entry: {
-    main: ['./browser/main/index.js']
+    main: ['./browser/main/index.js'],
+    detached: ['./browser/main/detachedNote/index.js']
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.styl'],
@@ -14,7 +15,8 @@ var config = {
       'web',
       'browserify',
       ['jam', 'main'],
-      'main'
+      'main',
+      'detached'
     ],
     alias: {
       lib: path.join(__dirname, 'lib'),
