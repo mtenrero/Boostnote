@@ -9,6 +9,8 @@ import store from '../store'
 const el = document.getElementById('content')
 const history = syncHistoryWithStore(hashHistory, store)
 
+history.push(`/${location.search}`)
+
 ReactDOM.render((
   <Provider store={store}>
     <Router history={history}>
