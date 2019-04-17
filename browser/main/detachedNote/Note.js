@@ -21,7 +21,11 @@ const { remote } = electron
 class Note extends React.Component {
   render () {
     return (
-      <div>NOTE EDIT WINDOW</div>
+      <Detail
+        {..._.pick(this.props, [
+          'location'
+        ])}
+      />
     )
   }
 }
