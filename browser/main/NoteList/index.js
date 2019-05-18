@@ -26,11 +26,29 @@ const { remote } = require('electron')
 const { dialog } = remote
 const WP_POST_PATH = '/wp/v2/posts'
 
+const regexMatchStartingTitleNumber = new RegExp('^([0-9]*\.?[0-9]+).*$')
+
 function sortByCreatedAt (a, b) {
   return new Date(b.createdAt) - new Date(a.createdAt)
 }
 
 function sortByAlphabetical (a, b) {
+  const matchA = regexMatchStartingTitleNumber.exec(a.title)
+  const matchB = regexMatchStartingTitleNumber.exec(b.title)
+
+  if (matchA && matchA.length === 2 && matchB && matchB.length === 2) {
+    // Both note titles are starting with a float. We will compare it now.
+    const floatA = parseFloat(matchA[1])
+    const floatB = parseFloat(matchB[1])
+
+    const diff = floatA - floatB
+    if (diff !== 0) {
+      return diff
+    }
+
+    // The float values are equal. We will compare the full title.
+  }
+
   return a.title.localeCompare(b.title)
 }
 
@@ -895,7 +913,7 @@ class NoteList extends React.Component {
     if (!location.pathname.match(/\/trashed/)) this.addNotesFromFiles(filepaths)
   }
 
-  // Add notes to the current folder
+ // Add notes to the current folder
   addNotesFromFiles (filepaths) {
     const { dispatch, location } = this.props
     const { storage, folder } = this.resolveTargetFolder()
@@ -919,13 +937,20 @@ class NoteList extends React.Component {
           }
           dataApi.createNote(storage.key, newNote)
           .then((note) => {
-            dispatch({
-              type: 'UPDATE_NOTE',
-              note: note
-            })
-            hashHistory.push({
-              pathname: location.pathname,
-              query: {key: getNoteKey(note)}
+            attachmentManagement.importAttachments(note.content, filepath, storage.key, note.key)
+            .then((newcontent) => {
+              note.content = newcontent
+
+              dataApi.updateNote(storage.key, note.key, note)
+
+              dispatch({
+                type: 'UPDATE_NOTE',
+                note: note
+              })
+              hashHistory.push({
+                pathname: location.pathname,
+                query: {key: getNoteKey(note)}
+              })
             })
           })
         })
